@@ -12,8 +12,10 @@ RUN apt-get install -y supervisor wget \
 		libappindicator1 libcurl3 fonts-wqy-microhei
 
 # download google chrome and install
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dpkg -i google-chrome*.deb
+#RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+COPY chrome/ ./
+
+RUN dpkg -i ./google-chrome-stable_current_amd64.deb
 RUN apt-get install -f
 
 RUN apt-get autoclean && apt-get autoremove && \

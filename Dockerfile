@@ -11,6 +11,8 @@ RUN apt-get install -y supervisor wget \
 		gconf-service libnspr4 libnss3 fonts-liberation \
 		libappindicator1 libcurl3 fonts-wqy-microhei
 
+RUN apt-get install -y apt-get install openjdk-7-jre  && apt-get clean -y
+
 # download google chrome and install
 #RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 COPY chrome/ ./
@@ -20,8 +22,6 @@ RUN apt-get install -f
 
 RUN apt-get autoclean && apt-get autoremove && \
 		rm -rf /var/lib/apt/lists/*
-
-RUN apt-get install -y default-jre && apt-get clean -y
 
 WORKDIR /root
 

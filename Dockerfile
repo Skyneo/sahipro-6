@@ -28,7 +28,10 @@ COPY supervisord.conf ./
 
 COPY xfce4 ./.config/xfce4
 
-COPY sahipro /root/sahipro
+COPY sahipro /root
+
+RUN wget http://sahipro.com/static/builds/pro/install_sahi_pro_v621_20160411.jar && \
+    wget http://sahipro.com/static/builds/pro/install_sahi_pro_runner_v621_20160411.jar
 
 RUN java -jar /root/sahipro/install_sahi_pro_v621_20160411.jar silent_install.xml
 

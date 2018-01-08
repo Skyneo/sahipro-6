@@ -21,7 +21,7 @@ RUN apt-get install -f
 RUN apt-get autoclean && apt-get autoremove && \
 		rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install -y openjdk-8-jdk && apt-get clean -y
+RUN apt-get install -y default-jre && apt-get clean -y
 
 WORKDIR /root
 

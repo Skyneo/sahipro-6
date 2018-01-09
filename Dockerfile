@@ -41,4 +41,4 @@ COPY sahipro.desktop /root/Desktop/sahipro.desktop
 
 EXPOSE 5900
 
-ENTRYPOINT ["/startup.sh"]
+ENTRYPOINT ["sudo /startup.sh"]

@@ -25,7 +25,7 @@ RUN apt-get autoclean && apt-get autoremove && \
 
 WORKDIR /root
 
-COPY startup.sh /
+COPY startup.sh ./
 COPY supervisord.conf ./
 
 COPY xfce4 ./.config/xfce4
@@ -41,4 +41,4 @@ COPY sahipro.desktop /root/Desktop/sahipro.desktop
 
 EXPOSE 5900
 
-ENTRYPOINT ["sudo /startup.sh"]
+ENTRYPOINT ["./startup.sh"]

@@ -28,6 +28,9 @@ WORKDIR /root
 USER root
 
 COPY startup.sh ./
+
+RUN chmod 777 ./startup.sh
+
 COPY supervisord.conf ./
 
 COPY xfce4 ./.config/xfce4

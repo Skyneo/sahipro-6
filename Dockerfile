@@ -25,6 +25,8 @@ RUN apt-get autoclean && apt-get autoremove && \
 
 WORKDIR /root
 
+USER root
+
 COPY startup.sh ./
 COPY supervisord.conf ./
 

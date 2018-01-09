@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=SahiPro
+Exec=/root/sahi_pro/bin/sahi.sh
+Terminal=true
+Type=Application
+Path=/root/sahi_pro/bin/

@@ -9,28 +9,40 @@ RUN apt-get update -y
 RUN apt-get install -y supervisor wget \
 		xfce4 xfce4-goodies x11vnc xvfb \
 		gconf-service libnspr4 libnss3 fonts-liberation \
-		libappindicator1 libcurl3 fonts-wqy-microhei
+		libappindicator1 libcurl3 fonts-wqy-microhei vim
+
+RUN apt-get install -y openjdk-7-jre && apt-get clean -y
 
 # download google chrome and install
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dpkg -i google-chrome*.deb
+#RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+COPY chrome/ ./
+
+RUN dpkg -i ./google-chrome-stable_current_amd64.deb
 RUN apt-get install -f
 
 RUN apt-get autoclean && apt-get autoremove && \
 		rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install -y openjdk-8-jdk && apt-get clean -y
-
 WORKDIR /root
 
+USER root
+
 COPY startup.sh ./
+
+RUN chmod 777 ./startup.sh
+
 COPY supervisord.conf ./
 
 COPY xfce4 ./.config/xfce4
 
-COPY sahipro /root/sahipro
+COPY sahipro ./
 
-RUN java -jar /root/sahipro/install_sahi_pro_v621_20160411.jar silent_install.xml
+RUN wget http://sahipro.com/static/builds/pro/install_sahi_pro_v621_20160411.jar && \
+    wget http://sahipro.com/static/builds/pro/install_sahi_pro_runner_v621_20160411.jar
+
+RUN java -jar install_sahi_pro_v621_20160411.jar silent_install.xml
+
+COPY sahipro.desktop /root/Desktop/sahipro.desktop
 
 EXPOSE 5900
 

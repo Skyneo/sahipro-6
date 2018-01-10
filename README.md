@@ -12,8 +12,13 @@ Sahi PRO 6.2 with chrome
 
 Start container with:
 
-docker run -d -p 5900:5900 -p 9999:9999 smonko/sahipro-6
+docker run -d -p 5901:5901 -p 6901:6901 -p 9999:9999 -v /opt/sahipro:/headless/sahidata smonko/sahipro-6
 
+5901 - VNC
+6901 - web VNC
+9999 - sahi api
+
+/headless/sahidata - copy your license.data here
 
 Maintainer
 ======================

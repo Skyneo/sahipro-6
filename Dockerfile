@@ -1,49 +1,41 @@
-FROM ubuntu:14.04.3
+FROM consol/ubuntu-xfce-vnc:1.2.3
 
 MAINTAINER Stefan Monko "stefan.monko@posam.sk"
 
-ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
+### Environment config
+ENV VNC_PORT=5901 \
+    NO_VNC_PORT=6901 \
+    VNC_COL_DEPTH=24 \
+    VNC_RESOLUTION=1280x1024 \
+    VNC_PW=sahipro
 
-RUN apt-get update -y
-RUN apt-get install -y supervisor wget \
-		xfce4 xfce4-goodies x11vnc xvfb \
-		gconf-service libnspr4 libnss3 fonts-liberation \
-		libappindicator1 libcurl3 fonts-wqy-microhei vim
+USER 0
 
-RUN apt-get install -y openjdk-7-jre && apt-get clean -y
+RUN apt-get update && apt-get install -y openjdk-8-jre && apt-get clean -y
 
 # download google chrome and install
 #RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-COPY chrome/ ./
+# COPY chrome/ ./
+#
+# RUN dpkg -i ./google-chrome-stable_current_amd64.deb
+# RUN apt-get install -f
+#RUN xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set /usr/share/backgrounds/xfce/xfce-blue.jpg
 
-RUN dpkg -i ./google-chrome-stable_current_amd64.deb
-RUN apt-get install -f
+USER 1984
 
-RUN apt-get autoclean && apt-get autoremove && \
-		rm -rf /var/lib/apt/lists/*
+WORKDIR /headless
 
-WORKDIR /root
+COPY sahipro /headless
+COPY sahipro.desktop /headless/Desktop/sahipro.desktop
 
-USER root
+RUN wget http://sahipro.com/static/builds/pro/install_sahi_pro_v621_20160411.jar -P /headless && \
+    wget http://sahipro.com/static/builds/pro/install_sahi_pro_runner_v621_20160411.jar -P /headless
 
-COPY startup.sh ./
+RUN java -jar /headless/install_sahi_pro_v621_20160411.jar /headless/silent_install.xml
 
-RUN chmod 777 ./startup.sh
+RUN mkdir /headless/sahidata && ln -s /headless/sahidata/license.data /headless/sahi_pro/userdata/config/license.data && chmod +x /headless/Desktop/sahipro.desktop
 
-COPY supervisord.conf ./
+EXPOSE 5901 6901 9999
 
-COPY xfce4 ./.config/xfce4
-
-COPY sahipro ./
-
-RUN wget http://sahipro.com/static/builds/pro/install_sahi_pro_v621_20160411.jar && \
-    wget http://sahipro.com/static/builds/pro/install_sahi_pro_runner_v621_20160411.jar
-
-RUN java -jar install_sahi_pro_v621_20160411.jar silent_install.xml
-
-COPY sahipro.desktop /root/Desktop/sahipro.desktop
-
-EXPOSE 5900 9999
-
-ENTRYPOINT ["./startup.sh"]
+ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
+CMD ["--tail-log"]

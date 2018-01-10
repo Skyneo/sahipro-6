@@ -9,7 +9,7 @@ RUN apt-get update -y
 RUN apt-get install -y supervisor wget \
 		xfce4 xfce4-goodies x11vnc xvfb \
 		gconf-service libnspr4 libnss3 fonts-liberation \
-		libappindicator1 libcurl3 fonts-wqy-microhei
+		libappindicator1 libcurl3 fonts-wqy-microhei vim
 
 RUN apt-get install -y openjdk-7-jre && apt-get clean -y
 
@@ -25,7 +25,12 @@ RUN apt-get autoclean && apt-get autoremove && \
 
 WORKDIR /root
 
+USER root
+
 COPY startup.sh ./
+
+RUN chmod 777 ./startup.sh
+
 COPY supervisord.conf ./
 
 COPY xfce4 ./.config/xfce4
@@ -35,7 +40,9 @@ COPY sahipro ./
 RUN wget http://sahipro.com/static/builds/pro/install_sahi_pro_v621_20160411.jar && \
     wget http://sahipro.com/static/builds/pro/install_sahi_pro_runner_v621_20160411.jar
 
-RUN java -jar ./install_sahi_pro_v621_20160411.jar ./silent_install.xml
+RUN java -jar install_sahi_pro_v621_20160411.jar silent_install.xml
+
+COPY sahipro.desktop /root/Desktop/sahipro.desktop
 
 EXPOSE 5900
 

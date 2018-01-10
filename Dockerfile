@@ -44,6 +44,6 @@ RUN java -jar install_sahi_pro_v621_20160411.jar silent_install.xml
 
 COPY sahipro.desktop /root/Desktop/sahipro.desktop
 
-EXPOSE 5900
+EXPOSE 5900 9999
 
 ENTRYPOINT ["./startup.sh"]

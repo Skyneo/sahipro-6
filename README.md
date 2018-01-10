@@ -12,7 +12,7 @@ Sahi PRO 6.2 with chrome
 
 Start container with:
 
-docker run -d -p 5900:5900 smonko/salt-syndic-api
+docker run -d -p 5900:5900 -p 9999:9999 smonko/sahipro-6
 
 
 Maintainer

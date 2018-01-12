@@ -3,6 +3,8 @@
 Sahi PRO 6.2 with chrome
 ---
 
+Based on consol/ubuntu-xfce-vnc:1.2.3
+
 * sahipro 6.2.1
 * java
 * chrome
@@ -19,6 +21,7 @@ docker run -d -p 5901:5901 -p 6901:6901 -p 9999:9999 -v /opt/sahipro:/headless/s
 9999 - sahi api
 
 /headless/sahidata - copy your license.data here
+/headless/sahidata/scripts - copy your scripts here
 
 Maintainer
 ======================

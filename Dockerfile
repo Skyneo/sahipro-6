@@ -29,7 +29,7 @@ RUN java -jar /headless/install_sahi_pro_v621_20160411.jar /headless/silent_inst
     mkdir /headless/sahi_pro/userdata/scripts/user && \
     ln -s /headless/sahidata/license.data /headless/sahi_pro/userdata/config/license.data && \
     ln -s /headless/sahidata/scripts /headless/sahi_pro/userdata/scripts/user && \
-    cp /headless/sahi_pro/certgen/X509CA/ca/new_ca.crt /usr/share/ca-certificate && \
+    cp /headless/sahi_pro/certgen/X509CA/ca/new_ca.crt /usr/share/ca-certificates/sahipro.crt && \
     dpkg-reconfigure ca-certificates
 
 COPY sahipro/sahi.properties /headless/sahi_pro/config/sahi.properties
